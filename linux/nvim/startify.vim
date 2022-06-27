@@ -11,7 +11,7 @@ endfunction
 
 " Startify configutaitons
 let g:startify_files_number = 5
-let g:startify_padding_left = 68
+"let g:startify_padding_left = 0
 let g:startify_lists = [
         \ { 'type': 'sessions',  'header': ['   Sessions']       },
         \ { 'type': 'files',     'header': ['   MRU']            },

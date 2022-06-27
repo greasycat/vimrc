@@ -12,3 +12,5 @@ nnoremap <silent> <leader>l <cmd>LLToggle!<CR>
 
 " CHADTree
 nnoremap <leader>f <cmd>CHADopen<cr>
+
+"nmap <leader>t :split | terminal<CR>

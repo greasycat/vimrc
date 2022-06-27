@@ -25,6 +25,13 @@ require'lspconfig'.csharp_ls.setup{
     end,
 }
 
+
+require'lspconfig'.rust_analyzer.setup{
+    on_attach = function(client)
+        require 'illuminate'.on_attach(client)
+    end,
+}
+
 require'qf_helper'.setup({
   prefer_loclist = true,       -- Used for QNext/QPrev (see Commands below)
   sort_lsp_diagnostics = true, -- Sort LSP diagnostic results
@@ -64,7 +71,46 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+require("formatter").setup {
+  -- Enable or disable logging
+    logging = true,
+  -- Set the log level
+    log_level = vim.log.levels.WARN,
+  -- All formatter configurations are opt-in
+    filetype = {
+        rust = {require("formatter.filetypes.rust").rustfmt},
+        toml = {require("formatter.filetypes.toml").taplo},
+        yaml = {require("formatter.filetypes.yaml").prettier},
+        json = {require("formatter.filetypes.json").prettier},
+        css = {require("formatter.filetypes.css").prettier},
+        html = {require("formatter.filetypes.html").prettier},
+        typescript = {require("formatter.filetypes.typescript").prettier},
+        javascript = {require("formatter.filetypes.javascript").prettier},
+        python = {require("formatter.filetypes.python").black},
+    },
+
+    ["*"] = {
+        require("formatter.filetypes.any").remove_trailing_whitespace
+    }
+}
 require'nvim-web-devicons'.setup {}
 require'feline'.setup {}
-require'feline'.winbar.setup()
 require'Comment'.setup()
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+                   vim.lsp.diagnostic.on_publish_diagnostics, {
+                     -- Enable underline, use default values
+                     underline = true,
+                     -- Enable virtual text, override spacing to 4
+                     virtual_text = {
+                       spacing = 4,
+                     },
+                     -- Use a function to dynamically turn signs off
+                     -- and on, using buffer local variables
+                     signs = function(namespace, bufnr)
+                       return vim.b[bufnr].show_signs == true
+                     end,
+                     -- Disable a feature
+                     update_in_insert = true,
+                   }
+                 )

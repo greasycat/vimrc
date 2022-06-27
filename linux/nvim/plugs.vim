@@ -47,4 +47,10 @@ call plug#begin('~/.nvim/plugged')
     "Search
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
+
+    "Formatting
+    Plug 'mhartington/formatter.nvim'
+
+    "Terminal
+    Plug 'kassio/neoterm'
 call plug#end()
